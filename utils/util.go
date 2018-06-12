@@ -13,7 +13,7 @@ func Transform(dst io.Writer, src io.Reader) {
 }
 
 func TransformPrompt(dst io.Writer, src io.Reader) {
-	prompt.Input()
+	input := prompt.Input(nil, nil, nil)
 	if _, err := io.Copy(dst, src); err != nil {
 		log.Fatal(err)
 	}
