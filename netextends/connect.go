@@ -2,14 +2,13 @@ package netextends
 
 import (
 	"fmt"
-	"io"
-	"os"
-	"net"
-	"log"
-	"os/exec"
 	"github.com/grt1st/netgo/utils"
+	"io"
+	"log"
+	"net"
+	"os"
+	"os/exec"
 )
-
 
 func ConnectNormalMode(conn net.Conn) {
 	go func() {
@@ -17,9 +16,9 @@ func ConnectNormalMode(conn net.Conn) {
 		os.Exit(0)
 	}()
 	//go utils.Transform(os.Stdout, conn)
-	utils.Transform(conn, os.Stdin)
+	//utils.Transform(conn, os.Stdin)
+	utils.TransformPrompt(conn, os.Stdin)
 }
-
 
 func ConnectExecMode(conn net.Conn, exeCmd string) {
 	cmd := exec.Command(exeCmd)
@@ -57,9 +56,7 @@ func ConnectExecMode(conn net.Conn, exeCmd string) {
 	os.Exit(0)
 }
 
-
 func ConnectHtmlMode(conn net.Conn) {
 	fmt.Fprintf(conn, "GET / HTTP/1.0\r\n\r\n")
 	io.Copy(os.Stdout, conn)
 }
-
