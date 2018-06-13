@@ -20,6 +20,7 @@ func completer(d prompt.Document) []prompt.Suggest {
 func TransformWithPrompt(dst io.Writer, src io.Reader) {
 	for {
 		input := prompt.Input("", completer)
+		log.Println("got input:" + input)
 		dst.Write([]byte(input))
 	}
 }
