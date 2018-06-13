@@ -12,7 +12,8 @@ var Config struct {
 }
 
 func init() {
-	Config.LogPath = "/tmp/debug.log"
+	Config.LogPath = "/tmp/netgo.log"
+	Config.Enabled = true
 }
 
 func Debug(l ...interface{}) {

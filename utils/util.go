@@ -2,6 +2,7 @@ package utils
 
 import (
 	"github.com/c-bata/go-prompt"
+	"github.com/grt1st/netgo/logging"
 	"io"
 	"log"
 )
@@ -20,7 +21,7 @@ func completer(d prompt.Document) []prompt.Suggest {
 func TransformWithPrompt(dst io.Writer, src io.Reader) {
 	for {
 		input := prompt.Input("", completer)
-		log.Println("got input:" + input)
+		logging.Debug("got input:" + input)
 		dst.Write([]byte(input))
 	}
 }
