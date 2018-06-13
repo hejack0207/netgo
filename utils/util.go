@@ -12,12 +12,14 @@ func Transform(dst io.Writer, src io.Reader) {
 	}
 }
 
-func TransformPrompt(dst io.Writer, src io.Reader) {
+func completer(d prompt.Document) []prompt.Suggest {
+	s := []prompt.Suggest{}
+	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
+}
+
+func TransformWithPrompt(dst io.Writer, src io.Reader) {
 	for {
-		input := prompt.Input(nil)
-		dst.Write(input)
-		if _, err := io.Copy(dst, src); err != nil {
-			log.Fatal(err)
-		}
+		input := prompt.Input("", completer)
+		dst.Write([]byte(input))
 	}
 }

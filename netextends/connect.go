@@ -17,7 +17,7 @@ func ConnectNormalMode(conn net.Conn) {
 	}()
 	//go utils.Transform(os.Stdout, conn)
 	//utils.Transform(conn, os.Stdin)
-	utils.TransformPrompt(conn, os.Stdin)
+	utils.TransformWithPrompt(conn, os.Stdin)
 }
 
 func ConnectExecMode(conn net.Conn, exeCmd string) {
