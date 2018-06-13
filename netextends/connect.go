@@ -13,6 +13,12 @@ import (
 func ConnectNormalMode(conn net.Conn) {
 	go func() {
 		io.Copy(os.Stdout, conn)
+		/*
+			for {
+				conn.Read()
+				os.Stdout.Write()
+			}
+		*/
 		os.Exit(0)
 	}()
 	//go utils.Transform(os.Stdout, conn)
