@@ -28,6 +28,7 @@ func TransformWithPrompt(dst io.Writer, src io.Reader) {
 		executor,
 		completer,
 		prompt.OptionPrefix("ga?>"),
+		prompt.OptionHistory([]string{"/tmp/x.his"}),
 		prompt.OptionTitle("netgo-prompt"),
 	)
 	p.Run()
