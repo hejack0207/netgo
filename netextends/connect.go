@@ -2,6 +2,7 @@ package netextends
 
 import (
 	"fmt"
+	//"github.com/c-bata/go-prompt"
 	"github.com/grt1st/netgo/utils"
 	"io"
 	"log"
