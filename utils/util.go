@@ -23,7 +23,7 @@ func TransformWithPrompt(dst io.Writer, src io.Reader) {
 	executor := func(input string) {
 		os.Stdout.WriteString("got input:" + input)
 		logging.Debug("got input:" + input)
-		dst.Write([]byte(input))
+		dst.Write([]byte(input + "\n"))
 	}
 
 	p := prompt.New(
