@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/grt1st/netgo/netextends"
-	"github.com/grt1st/netgo/utils"
+	//"github.com/grt1st/netgo/utils"
 	"log"
 	"net"
 	"os"

@@ -1,16 +1,15 @@
 package netextends
 
 import (
-	"net"
-	"os/exec"
-	"log"
-	"os"
+	"bufio"
 	"fmt"
 	"github.com/grt1st/netgo/utils"
-	"bufio"
 	"io"
+	"log"
+	"net"
+	"os"
+	"os/exec"
 )
-
 
 func ListenNormalMode(listener net.Listener) {
 	allClients := make(map[net.Conn]int)
@@ -54,7 +53,7 @@ func ListenNormalMode(listener net.Listener) {
 						if err != io.EOF {
 							log.Print("err")
 							log.Print(err)
-						}else if err == io.EOF {
+						} else if err == io.EOF {
 							//  关闭连接
 							log.Print("eof")
 							os.Exit(0)
@@ -68,7 +67,7 @@ func ListenNormalMode(listener net.Listener) {
 		case message := <-inMessages:
 			fmt.Print(message)
 		case message := <-outMessages:
-			for c := range allClients{
+			for c := range allClients {
 				go func(c net.Conn) {
 					_, err := c.Write([]byte(message))
 					if err != nil {
@@ -84,7 +83,6 @@ func ListenNormalMode(listener net.Listener) {
 		}
 	}
 }
-
 
 func ListenExecMode(listener net.Listener, exeCmd string) {
 	newConnections := make(chan net.Conn)
@@ -120,7 +118,7 @@ func ListenExecMode(listener net.Listener, exeCmd string) {
 
 				go func() {
 					utils.Transform(stdin, conn)
-					os.Exit(0)
+					//os.Exit(0)
 				}()
 				go utils.Transform(conn, stdout)
 
@@ -136,9 +134,8 @@ func ListenExecMode(listener net.Listener, exeCmd string) {
 					os.Exit(1)
 				}
 
-				os.Exit(0)
+				//os.Exit(0)
 			}(conn)
 		}
 	}
 }
-
