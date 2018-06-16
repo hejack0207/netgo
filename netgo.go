@@ -3,16 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
+	"github.com/grt1st/netgo/netextends"
+	"github.com/grt1st/netgo/utils"
 	"log"
 	"net"
+	"os"
 	"os/signal"
-	"github.com/grt1st/netgo/utils"
-	"github.com/grt1st/netgo/netextends"
 )
 
 const versionNumber = "1.1.0#20180610"
-
 
 func main() {
 	version := flag.Bool("version", false, "Show program's version number and exit")
@@ -36,7 +35,7 @@ func main() {
 		fmt.Println(versionNumber)
 		return
 	}
-	if *help || *port == 0 || (*addr == "" && *listen == false &&  *rhost == ""){
+	if *help || *port == 0 || (*addr == "" && *listen == false && *rhost == "") {
 		flag.Usage()
 		return
 	}
@@ -44,13 +43,13 @@ func main() {
 	if *listen {
 		if *port1 == 0 {
 			listenE(*addr, *port, *exeCmd)
-		}else {
+		} else {
 			netextends.ServerAndServer(*addr, *port, *port1)
 		}
-	}else {
+	} else {
 		if *rhost != "" {
 			netextends.RemotePortForward(*addr, *port, *rhost)
-		}else {
+		} else {
 			connectS(*addr, *port, *htmlFlag, *exeCmd)
 		}
 	}
@@ -77,9 +76,9 @@ func connectS(addr string, port int, htmlFlag bool, exeCmd string) {
 
 	if htmlFlag {
 		netextends.ConnectHtmlMode(conn)
-	}else if exeCmd != ""{
+	} else if exeCmd != "" {
 		netextends.ConnectExecMode(conn, exeCmd)
-	}else {
+	} else {
 		netextends.ConnectNormalMode(conn)
 	}
 }
@@ -96,7 +95,7 @@ func listenE(addr string, port int, exeCmd string) {
 		log.Fatal(err)
 		os.Exit(1)
 	}
-	listener = utils.LimitListener(listener, 1)
+	//listener = utils.LimitListener(listener, 1)
 
 	go func() {
 		<-stopChan
@@ -109,8 +108,7 @@ func listenE(addr string, port int, exeCmd string) {
 
 	if exeCmd != "" {
 		netextends.ListenExecMode(listener, exeCmd)
-	}else {
+	} else {
 		netextends.ListenNormalMode(listener)
 	}
 }
-
