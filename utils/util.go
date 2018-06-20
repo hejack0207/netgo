@@ -38,6 +38,7 @@ func TransformWithPrompt(dst io.Writer, src io.Reader) {
 		return
 	}
 	defer histFile.Close()
+
 	histReader := bufio.NewReader(histFile)
 	histories := []string{}
 
