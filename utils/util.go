@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bufio"
+	"fmt"
 	"github.com/c-bata/go-prompt"
 	"github.com/grt1st/netgo/logging"
 	"io"
@@ -34,18 +35,18 @@ func TransformWithPrompt(dst io.Writer, src io.Reader) {
 	histFile, err := os.OpenFile(historyFilepath, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		fmt.Printf("error open file %s", historyFilepath)
-		return 1
+		return
 	}
 	defer histFile.Close()
 	histReader := bufio.NewReader(histFile)
-	histories := make([]string)
+	histories := []string{}
 
 	for {
 		inputStr, err := histReader.ReadString('\n')
 		if err == io.EOF {
 			break
 		}
-		histories.Append(inputStr)
+		histories = append(histories, inputStr)
 	}
 
 	p := prompt.New(
