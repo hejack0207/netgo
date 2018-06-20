@@ -1,10 +1,17 @@
 package utils
 
 import (
+	"bufio"
 	"github.com/c-bata/go-prompt"
 	"github.com/grt1st/netgo/logging"
 	"io"
+	//"io/ioutil"
 	"log"
+	"os"
+)
+
+const (
+	historyFilepath = "~/.config/netgo/history"
 )
 
 func Transform(dst io.Writer, src io.Reader) {
@@ -24,11 +31,28 @@ func TransformWithPrompt(dst io.Writer, src io.Reader) {
 		dst.Write([]byte(input + "\n"))
 	}
 
+	histFile, err := os.OpenFile(historyFilepath, os.O_CREATE|os.O_RDWR, 0644)
+	if err != nil {
+		fmt.Printf("error open file %s", historyFilepath)
+		return 1
+	}
+	defer histFile.Close()
+	histReader := bufio.NewReader(histFile)
+	histories := make([]string)
+
+	for {
+		inputStr, err := histReader.ReadString('\n')
+		if err == io.EOF {
+			break
+		}
+		histories.Append(inputStr)
+	}
+
 	p := prompt.New(
 		executor,
 		completer,
 		prompt.OptionPrefix("ga?>"),
-		prompt.OptionHistory([]string{"/tmp/x.his"}),
+		prompt.OptionHistory(histories),
 		prompt.OptionTitle("netgo-prompt"),
 	)
 	p.Run()
