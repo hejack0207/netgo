@@ -11,8 +11,8 @@ import (
 	"os"
 )
 
-const (
-	historyFilepath = "~/.config/netgo/history"
+var (
+	historyFilepath = os.Getenv("HOME") + "/.config/netgo/history"
 )
 
 func Transform(dst io.Writer, src io.Reader) {
