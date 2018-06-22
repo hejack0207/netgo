@@ -6,6 +6,7 @@ import (
 	"github.com/c-bata/go-prompt"
 	"github.com/grt1st/netgo/logging"
 	"io"
+	"strings"
 	//"io/ioutil"
 	"log"
 	"os"
@@ -47,7 +48,7 @@ func TransformWithPrompt(dst io.Writer, src io.Reader) {
 		if err == io.EOF {
 			break
 		}
-		histories = append(histories, inputStr)
+		histories = append(histories, strings.TrimSuffix(inputStr, "\n"))
 	}
 
 	p := prompt.New(
