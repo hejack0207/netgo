@@ -28,7 +28,7 @@ func completer(d prompt.Document) []prompt.Suggest {
 }
 
 func TransformWithPrompt(dst io.Writer, src io.Reader) {
-	histFile, err := os.OpenFile(historyFilepath, os.O_CREATE|os.O_RDONLY|os.O_APPEND, 0644)
+	histFile, err := os.OpenFile(historyFilepath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Printf("error open file %s", historyFilepath)
 		return
