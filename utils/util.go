@@ -28,17 +28,18 @@ func completer(d prompt.Document) []prompt.Suggest {
 }
 
 func TransformWithPrompt(dst io.Writer, src io.Reader) {
-	executor := func(input string) {
-		logging.Debug("got input:" + input)
-		dst.Write([]byte(input + "\n"))
-	}
-
 	histFile, err := os.OpenFile(historyFilepath, os.O_CREATE|os.O_RDONLY|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Printf("error open file %s", historyFilepath)
 		return
 	}
 	defer histFile.Close()
+
+	executor := func(input string) {
+		logging.Debug("got input:" + input)
+		histFile.WriteString(input + "\n")
+		dst.Write([]byte(input + "\n"))
+	}
 
 	histReader := bufio.NewReader(histFile)
 	histories := []string{}
